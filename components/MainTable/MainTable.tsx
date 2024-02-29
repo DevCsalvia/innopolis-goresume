@@ -1,7 +1,7 @@
 import React from "react";
 import type { TableProps } from "antd";
 import { Space, Table } from "antd";
-import { useRequest } from "../../lib/hooks/useRequest";
+import { baseUrl, useRequest } from "../../lib/hooks/useRequest";
 
 interface DataType {
   key: string;
@@ -32,7 +32,7 @@ const columns: TableProps<DataType>["columns"] = [
     key: "action",
     render: (_, record) => (
       <Space size="middle">
-        <a>Download</a>
+        <a href={`${baseUrl}/docx`}>Download</a>
       </Space>
     ),
   },
