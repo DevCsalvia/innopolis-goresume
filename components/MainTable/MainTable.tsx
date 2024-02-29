@@ -1,13 +1,13 @@
 import React from "react";
 import type { TableProps } from "antd";
-import { Space, Table, Tag } from "antd";
+import { Space, Table } from "antd";
 import { useRequest } from "../../lib/hooks/useRequest";
 
 interface DataType {
   key: string;
+  email: string;
   name: string;
   job: string;
-  tags: string[];
 }
 
 const columns: TableProps<DataType>["columns"] = [
@@ -18,37 +18,21 @@ const columns: TableProps<DataType>["columns"] = [
     render: (text) => <a>{text}</a>,
   },
   {
+    title: "Email",
+    key: "email",
+    dataIndex: "email",
+  },
+  {
     title: "Должность",
     dataIndex: "job",
     key: "job",
-  },
-  {
-    title: "Навыки",
-    key: "tags",
-    dataIndex: "tags",
-    render: (_, { tags }) => (
-      <>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? "geekblue" : "green";
-          if (tag === "loser") {
-            color = "volcano";
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
   },
   {
     title: "Действия",
     key: "action",
     render: (_, record) => (
       <Space size="middle">
-        <a>Invite</a>
-        <a>Delete</a>
+        <a>Download</a>
       </Space>
     ),
   },
@@ -61,7 +45,7 @@ export const MainTable = () => {
   return (
     <Table
       columns={columns}
-      dataSource={result}
+      dataSource={result?.resumes}
       loading={isLoading}
       className="border-4 border-gray-500 rounded-lg w-[1000px]"
     />
