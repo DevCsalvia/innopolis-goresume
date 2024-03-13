@@ -6,15 +6,10 @@ export const resumeApi = baseApi.injectEndpoints({
       query: ({ accessToken, link }) => ({
         url: `/api/ConvertResume?accessToken=${accessToken}&link=${encodeURIComponent(link)}`,
         method: "POST",
-        responseHandler: async (response) => {
-          const blob = await response.blob();
-
+        responseHandler: async (response) =>
           window.location.assign(
             window.URL.createObjectURL(await response.blob()),
-          );
-
-          return blob;
-        },
+          ),
         cache: "no-cache",
       }),
     }),

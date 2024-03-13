@@ -13,8 +13,6 @@ export default function IndexPage() {
     fixedCacheKey: LoadResumeMutationFixedCacheKey,
   });
 
-  console.log(data);
-
   return (
     <div className="pt-10 grid grid-cols-[1fr_2fr] gap-5">
       <LoadResumeForm />
