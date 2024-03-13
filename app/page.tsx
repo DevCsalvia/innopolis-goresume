@@ -1,18 +1,24 @@
 "use client";
-import { MainTable } from "../components/MainTable/MainTable";
-import { SWRConfig } from "swr";
 
-export default function Home() {
+import { LoadResumeForm } from "@/lib/features/LoadResumeForm";
+import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+import { useState } from "react";
+import { useConvertResumeMutation } from "@/lib/entity/resume";
+import { LoadResumeMutationFixedCacheKey } from "@/lib/features/LoadResumeForm/ui/LoadResumeForm";
+
+export default function IndexPage() {
+  const [docs, setDocs] = useState([]);
+
+  const [, { isLoading, data }] = useConvertResumeMutation({
+    fixedCacheKey: LoadResumeMutationFixedCacheKey,
+  });
+
+  console.log(data);
+
   return (
-    <SWRConfig
-      value={{
-        fetcher: (resource, init) =>
-          fetch(resource, init).then((res) => res.json()),
-      }}
-    >
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <MainTable />
-      </main>
-    </SWRConfig>
+    <div className="pt-10 grid grid-cols-[1fr_2fr] gap-5">
+      <LoadResumeForm />
+      <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />
+    </div>
   );
 }
